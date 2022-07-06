@@ -34,10 +34,18 @@ package_func
 ============
 
 
-    Add a short description here!
+    Package containing all the functions used for the probability calculations for the neutrino 
+    oscillations in the vacuum. Later, we may include, functions for the oscillations in matter
+    also.
 
 
-A longer description of your project goes here...
+All functions that are used are two files, the my_functions.py and the Prob_functions.py. 
+my_functions.py contains functions such as the PMNS_param_matrix(), flavor_to_index(a,b),
+D_mass(i,j) and D_mass_param(i,j). In these functions the library sympy is used and this 
+wants to be changed, in order to improve the speed of the calculations.
+Prob_functions.py contains all the formulas implemented for the calculations of the 
+probabilities. Different approaches such as my calculations and formulas taken from 
+the Review Article "Neutrino oscillations" from G.Bellini, L.Ludhova et al.
 
 
 .. _pyscaffold-notes:
