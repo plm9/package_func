@@ -38,14 +38,14 @@ E_nu=Symbol("E_nu",real=True)
 #Constants
 G_F=1.1163787*10**(-5)#GeV^-2
 
-""" def Y_e(L):
-    if L<15:
-        return 
+def Y_e(cz):
+    if cz<-0.8773:
+        return 0.466
     else:
-        return """
+        return 0.494
 
 rho=5.51  #g/cm^3
-#N_e=Y_e(L)*rho
+#N_e=Y_e(cz)*rho
 
 def PMNS_param_matrix():
     m=Matrix([
@@ -152,15 +152,26 @@ def delta_Kro(a,b):
     else:
         return 0
 
-def MSW_Dmass(j,i):
-    A=0 #THIS IS 0 FOR VACUUM BUT NOT FOR MATTER. FOR MATTER A=2sqrt(2)G_F N_e E_\nu
-    term=D_mass_param(j,i)*sqrt((cos(2*theta(i,j))-(A/D_mass_param(i,j)))**2+(sin(2*theta(i,j)))**2)
+def MSW_Dmass(j,i,cz,En,ordering="NO"):
+    N_e=Y_e(cz)*rho(cz)
+    A=2*np.sqrt(2)*G_F *N_e *En #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
+    #A=0
+    term=D_mass(j,i,ordering)*sqrt((np.cos(2*theta(i,j))-(A/D_mass(i,j,ordering)))**2+(np.sin(2*theta(i,j)))**2)
     return term 
 
-def MSW_angle(i,j):
-    A=0 #THIS IS 0 FOR VACUUM BUT NOT FOR MATTER. FOR MATTER A=2sqrt(2)G_F N_e E_\nu
-    term=0.5*asin((sin(2*theta(i,j))**2)/((cos(2*theta(i,j))-(A/D_mass_param(i,j)))**2+sin(2*theta(i,j))**2))
+def MSW_angle(i,j,cz,En):
+    N_e=Y_e(cz)*rho(cz)
+    A=2*np.sqrt(2)*G_F *N_e *En  #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
+    term=0.5*np.arcsin((np.sin(2*theta(i,j))**2)/((np.cos(2*theta(i,j))-(A/D_mass(i,j)))**2+np.sin(2*theta(i,j))**2))
     return term
+
+def rho(cz):
+    if cz<-0.9822:## inner core
+        return 12.8 #g/cm^3 *43.61*10**-19 GeV^-2 (Just unit tranformation)
+    elif cz<-0.8773:## outer core
+        return 11.05
+    else:
+        return 5.5
 
 
 def theta_MSW(i,j):
