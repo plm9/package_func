@@ -5,9 +5,9 @@ import package_func.my_functions as mf
 R_earth=6371 #km
 
 #angles
-theta_12=33.45 #deg
-theta_23=42.1
-theta_13=8.62
+theta_12=33.82 #deg
+theta_23=48.3
+theta_13=8.61
 
 #make this angles into rad for numpy
 theta_12_r=mf.deg_to_rad(theta_12)
@@ -29,7 +29,7 @@ c_13=np.cos(theta_13_r)
 
 def PMNS_matrix():
     m=np.array([
-        [c_12*c_13,s_12*c_13,s_13*np.exp(-d_cp*1j)],
+        [c_12*c_13,                               s_12*c_13,                                s_13*np.exp(-d_cp*1j)],
         [-s_12*c_23-c_12*s_23*s_13*np.exp(d_cp*1j),c_12*c_23-s_12*s_23*s_13*np.exp(d_cp*1j),s_23*c_13],
         [s_12*s_23-c_12*c_23*s_13*np.exp(d_cp*1j),-c_12*s_23-s_12*c_23*s_13*np.exp(d_cp*1j),c_23*c_13]])
 
@@ -66,20 +66,19 @@ def Prob_a_to_b_Gen_MSW(a,b,cz,En,type="normal",ordering="NO"): ## DOES NOT WORK
     else:
         U=PMNS_matrix()
 
-    re_sum=0
-    im_sum=0 
-    for i in [0,1,2]:
-        for j in [0,1,2]:
+    sum=0
+    for i in range(1,3):
+        for j in range(0,i):
             if i>j:
                 if i+1==1 and j+1==3:
                     mass_term=mf.MSW_Dmass(i+1,j+1,cz,En,ordering)
                 else:
                     mass_term=mf.D_mass(i+1,j+1,ordering)
                 term=U[index_b,i]*U[index_a,i].conjugate()*U[index_b,j].conjugate()*U[index_a,j]
-                re_sum+=term.real*(np.sin(1.27*(mass_term)*Long(cz)/(2*En)))**2#
-                im_sum+=term.imag*(np.sin(1.27*(mass_term)*Long(cz)/(En)))#
+                sum-=4*np.real(term)*(np.sin(2*1.27*(mass_term)*Long(cz)/(2*En)))**2
+                sum-=2*np.imag(term)*(np.sin(2*1.27*(mass_term)*Long(cz)/(En)))
                 del term
-    returner=mf.delta_Kro(a,b)-4*re_sum-2*im_sum
+    returner=mf.delta_Kro(a,b)+sum
     return returner
 
 def Prob_a_to_b_alt(a,b,cz,En,type="normal"):

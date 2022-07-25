@@ -7,15 +7,18 @@ theta_13= 8.62   #degrees
 
 delta_cp= 270    #degrees
 
-Dm_21   = 7.42*10**(-5) #eV^2
+Dm_21   = 7.39*10**(-5) #eV^2
 
 #Normal ordering
-Dm_31_no= 2.51*10**(-3) #eV^2
-Dm_32_no= 2.51*10**(-3) #eV^2
+Dm_32_no= 2.449*10**(-3) #eV^2
+#Dm_31_no= 2.55*10**(-3) #eV^2
+Dm_31_no=Dm_32_no+Dm_21
+
 
 #Inverse ordering
-Dm_31_io= -2.49*10**(-3) #eV^2
-Dm_32_io= -2.49*10**(-3) #eV^2
+Dm_32_io= -2.449*10**(-3) #eV^2
+#Dm_31_io= -2.449*10**(-3) #eV^2
+Dm_31_io=Dm_32_io+Dm_21
 
 #Defining symbols
 s_12=Symbol("s_12",real=True)
@@ -154,8 +157,8 @@ def delta_Kro(a,b):
 
 def MSW_Dmass(j,i,cz,En,ordering="NO"):
     N_e=Y_e(cz)*rho(cz)
-    A=2*np.sqrt(2)*G_F *N_e *En #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
-    #A=0
+    #A=2*np.sqrt(2)*G_F *N_e *En #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
+    A=0
     term=D_mass(j,i,ordering)*sqrt((np.cos(2*theta(i,j))-(A/D_mass(i,j,ordering)))**2+(np.sin(2*theta(i,j)))**2)
     return term 
 
