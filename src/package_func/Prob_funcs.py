@@ -70,7 +70,7 @@ def Prob_a_to_b_Gen_MSW(a,b,cz,En,type="normal",ordering="NO"): ## DOES NOT WORK
     for i in range(1,3):
         for j in range(0,i):
             if i>j:
-                if i+1==1 and j+1==3:
+                if i==2 and j==0:
                     mass_term=mf.MSW_Dmass(i+1,j+1,cz,En,ordering)
                 else:
                     mass_term=mf.D_mass(i+1,j+1,ordering)
