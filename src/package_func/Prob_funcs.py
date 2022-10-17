@@ -58,7 +58,7 @@ def Prob_calc_General(a,b,cz,En,type="normal",ordering="NO"):
     
     return mf.delta_Kro(a,b)-4*re_sum-2*im_sum
 
-def Prob_a_to_b_Gen_MSW(a,b,cz,En,type="normal",ordering="NO"): ## DOES NOT WORK FOR En<10**0 for e to e 
+def Prob_a_to_b_Gen_MSW(a,b,cz,En,type="normal",ordering="NO"): 
     index_a,index_b=mf.flavor_to_index(a,b)
 
     if type!="normal":

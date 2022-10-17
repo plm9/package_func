@@ -66,6 +66,7 @@ def rad_to_deg(theta):
 
 def flavor_to_index(a,b):
     if a == "e":
+
         index_a=0
     elif a == "mu":
         index_a=1
@@ -157,15 +158,15 @@ def delta_Kro(a,b):
 
 def MSW_Dmass(j,i,cz,En,ordering="NO"):
     N_e=Y_e(cz)*rho(cz)
-    #A=2*np.sqrt(2)*G_F *N_e *En #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
-    A=0
+    A=2*np.sqrt(2)*G_F *N_e *En #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
+    #A=0
     term=D_mass(j,i,ordering)*np.sqrt((np.cos(2*theta(i,j))-(A/D_mass(i,j,ordering)))**2+(np.sin(2*theta(i,j)))**2)
     return term 
 
 def MSW_angle(i,j,cz,En):
     N_e=Y_e(cz)*rho(cz)
-    #A=2*np.sqrt(2)*G_F *N_e *En  #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
-    A=0
+    A=2*np.sqrt(2)*G_F *N_e *En  #THIS IS 0 FOR VACUUM BUT FOR MATTER IS A=2sqrt(2)G_F N_e E_\nu
+    #A=0
     term=0.5*np.arcsin((np.sin(2*theta(i,j))**2)/((np.cos(2*theta(i,j))-(A/D_mass(i,j)))**2+np.sin(2*theta(i,j))**2))
     return term
 
